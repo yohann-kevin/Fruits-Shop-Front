@@ -1,18 +1,28 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <p>{{ info }}</p>
+    <AddProduct />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddProduct from './components/AddProducts.vue'
 
 export default {
   name: 'App',
+  data () {
+    return {
+      info: ""
+    }
+  },
   components: {
-    HelloWorld
-  }
+    AddProduct
+  },
+
+  mounted () {
+    this.$axios.get("http://localhost:7373/").then(response => (this.info = response.data.products))
+  },
 }
 </script>
 
