@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <p>{{ info }}</p>
-    <AddProduct />
+    <AddProduct v-on:entry="sendData($event)"/>
   </div>
 </template>
 
@@ -13,15 +13,23 @@ export default {
   name: 'App',
   data () {
     return {
-      info: ""
+      info: "",
     }
   },
   components: {
     AddProduct
   },
-
-  mounted () {
-    this.$axios.get("http://localhost:7373/").then(response => (this.info = response.data.products))
+  methods: {
+    findData: function() {
+      this.$axios.get("http://localhost:7373/").then(response => (this.info = response.data))
+    },
+    sendData: function(arg) {
+      this.$axios.post("http://localhost:7373/add", JSON.stringify({arg}))
+      this.findData()
+    }
+  },
+  mounted() {
+    this.findData()
   },
 }
 </script>
