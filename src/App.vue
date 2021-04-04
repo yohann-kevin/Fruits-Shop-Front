@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <p>{{ products }}</p>
+    <Header :symbol="products"/>
     <AddProduct v-on:entry="sendData($event)"/>
     <p>{{ price }}</p>
     <p>{{ basket }}</p>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import Header from './components/Header.vue'
 import AddProduct from './components/AddProducts.vue'
 
 export default {
@@ -20,6 +21,7 @@ export default {
     }
   },
   components: {
+    Header,
     AddProduct
   },
   methods: {
