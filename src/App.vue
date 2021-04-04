@@ -2,14 +2,16 @@
   <div id="app">
     <Header :symbol="products"/>
     <AddProduct v-on:entry="sendData($event)"/>
-    <p>{{ price }}</p>
-    <p>{{ basket }}</p>
+    <Price :result="price"/>
+    <Basket :resultBasket="basket"/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import AddProduct from './components/AddProducts.vue'
+import Price from './components/Price.vue'
+import Basket from './components/Basket.vue'
 
 export default {
   name: 'App',
@@ -22,7 +24,9 @@ export default {
   },
   components: {
     Header,
-    AddProduct
+    AddProduct,
+    Price,
+    Basket
   },
   methods: {
     findData: function() {
