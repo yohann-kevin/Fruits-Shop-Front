@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Header :symbol="products"/>
-    <AddProduct v-on:entry="sendData($event)"/>
+    <FormatSelector v-on:choiceFormat="sendData($event,false)"/>
+    <AddProduct v-on:entry="sendData($event,true)"/>
     <Price :result="price"/>
     <Basket :resultBasket="basket"/>
   </div>
@@ -9,6 +10,7 @@
 
 <script>
 import Header from './components/Header.vue'
+import FormatSelector from './components/FormatSelector.vue'
 import AddProduct from './components/AddProducts.vue'
 import Price from './components/Price.vue'
 import Basket from './components/Basket.vue'
@@ -26,7 +28,8 @@ export default {
     Header,
     AddProduct,
     Price,
-    Basket
+    Basket,
+    FormatSelector
   },
   methods: {
     findData: function() {
@@ -44,8 +47,14 @@ export default {
       }
       return result;
     },
-    sendData: function(arg) {
-      this.$axios.post("http://localhost:7373/add", JSON.stringify({arg}))
+    sendData: function(arg, isAddProducts) {
+      let routes = "";
+      if (isAddProducts) {
+        routes = "add";
+      } else {
+        routes = "select";
+      }
+      this.$axios.post("http://localhost:7373/" + routes, JSON.stringify({arg}))
       this.findData()
     }
   },
